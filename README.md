@@ -10,7 +10,10 @@
 
 This is an ESP-IDF based project which collects some sensor data over i2c, encodes it using the [BTHome](https://bthome.io/) format and sends it over Bluetooth.
 
-It is currently working, with the 3 sensors visible in Home Assistant.
+This repository is a fork of https://github.com/stumpylog/bthome-weather-station
+I adjusted it for use with my own PCB from the https://github.com/maufl/sensor2 repo.
+Mainly this means, it's configured for the ESP32-C6 target and is also reading and sending the battery voltage.
+Some more aggressive power saving options are also used, like Bluetooth modem sleep, dynamic frequency scaling and FreeRTOS tickless idle.
 
 ## Building
 

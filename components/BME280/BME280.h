@@ -237,7 +237,7 @@ namespace sensors
         };
         ctrl_hum _humReg; //!< hum register object
 
-        static constexpr uint8_t BME280_ADDRESS {0x77};
+        static constexpr uint8_t BME280_ADDRESS {0x76};
 
         i2cBus const& m_bus;
         BME280CalibrationData _calibrationData;

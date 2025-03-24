@@ -22,6 +22,7 @@
 
 static constexpr uint32_t US_TO_S_FACTOR {1000000};
 static constexpr uint32_t SECONDS_PER_MINUTE {60};
+static constexpr uint64_t SLEEP_10_SECONDS {10 * US_TO_S_FACTOR};
 static constexpr uint64_t SLEEP_1_MINUTE {SECONDS_PER_MINUTE * US_TO_S_FACTOR};
 static constexpr uint64_t SLEEP_5_MINUTES {SLEEP_1_MINUTE * 5};
 
@@ -96,15 +97,15 @@ void task_ble_entry(void* params)
             ESP_LOGI(BLE_TASK_NAME, "Sensor data ready");
 
             // Encode sensor data
-            uint8_t const dataLength = build_data_advert(&advertData[0]);
+            uint32_t const dataLength = build_data_advert(&advertData[0]);
 
             if (dataLength > bthome::constants::BLE_ADVERT_MAX_LEN)
             {
-                ESP_LOGE(BLE_TASK_NAME, "Advert size %i is too big, can't send it", dataLength);
+                ESP_LOGE(BLE_TASK_NAME, "Advert size %lu is too big, can't send it", dataLength);
             }
             else
             {
-                ESP_LOGI(BLE_TASK_NAME, "Advert size: %i bytes", dataLength);
+                ESP_LOGI(BLE_TASK_NAME, "Advert size: %lu bytes", dataLength);
                 // Configure advertising data
                 ESP_ERROR_CHECK(esp_ble_gap_config_adv_data_raw(&advertData[0], dataLength));
 
@@ -125,7 +126,7 @@ void task_ble_entry(void* params)
 
             // Enter deep sleep
             ESP_LOGI(BLE_TASK_NAME, "Goodbye!");
-            esp_deep_sleep(SLEEP_5_MINUTES);
+            esp_deep_sleep(SLEEP_10_SECONDS);
         }
         else
         {
